@@ -1,3 +1,3 @@
-module g-duff.com/groceries
+module github.com/g-duff/groceries
 
 go 1.22.3
