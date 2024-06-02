@@ -3,19 +3,19 @@ package main
 import (
 	"fmt"
 
-	"github.com/g-duff/groceries/pkg"
+	"github.com/g-duff/groceries/pkg/shoppinglist"
 )
 
 func main() {
 
 	meals := [10]string{"foo", "bar"}
 
-	groceriesListItems := pkg.Groceries(meals[:])
+	dd := shoppinglist.SpyMealsData{}
+
+	groceriesListItems := shoppinglist.Create(&dd, meals[:])
 
 	for _, li := range groceriesListItems {
-		if li != (pkg.GroceriesListItem{}) {
-			fmt.Println(li.ToString())
-		}
+		fmt.Println(li.ToString())
 	}
 
 }
