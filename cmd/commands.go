@@ -8,9 +8,12 @@ import (
 
 func main() {
 
-	meals := [10]string{"foo", "bar"}
+	meals := [10]string{"chips", "bar"}
 
-	dd := shoppinglist.SpyMealsData{}
+	// dd := shoppinglist.MealsDataSpy{}
+	dd := shoppinglist.MealsDataFiles{ 
+		Directory: "./testdata",
+	}
 
 	groceriesListItems := shoppinglist.Create(&dd, meals[:])
 

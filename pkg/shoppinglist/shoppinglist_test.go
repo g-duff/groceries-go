@@ -8,28 +8,28 @@ import (
 func TestBusiness(t *testing.T) {
 
 	// Given
-	md := SpyMealsData{CountGetMealsIngredients: 0}
+	md := MealsDataSpy{CountGetMealsIngredients: 0}
 	meals := [10]string{"foo", "bar"}
 	expected := []GroceriesListItem{
 		{
-			item:     "beans",
-			quantity: 0.1,
-			unit:     "kg",
+			Item:     "beans",
+			Quantity: 0.1,
+			Unit:     "kg",
 		},
 		{
-			item:     "beans",
-			quantity: 0.2,
-			unit:     "kg",
+			Item:     "beans",
+			Quantity: 0.2,
+			Unit:     "kg",
 		},
 		{
-			item:     "rice",
-			quantity: 0.3,
-			unit:     "kg",
+			Item:     "rice",
+			Quantity: 0.3,
+			Unit:     "kg",
 		},
 		{
-			item:     "rice",
-			quantity: 0.5,
-			unit:     "kg",
+			Item:     "rice",
+			Quantity: 0.5,
+			Unit:     "kg",
 		},
 	}
 

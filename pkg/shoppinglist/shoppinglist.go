@@ -26,10 +26,10 @@ func Create(md MealsData, meals []string) []GroceriesListItem {
 	toSort := myList[:outer_count]
 
 	sort.Slice(toSort, func(i int, j int) bool {
-		if myList[i].item != myList[j].item {
-			return myList[i].item < myList[j].item
+		if myList[i].Item != myList[j].Item {
+			return myList[i].Item < myList[j].Item
 		}
-		return myList[i].quantity < myList[j].quantity
+		return myList[i].Quantity < myList[j].Quantity
 
 	})
 
@@ -37,11 +37,11 @@ func Create(md MealsData, meals []string) []GroceriesListItem {
 }
 
 type GroceriesListItem struct {
-	item     string
-	quantity float64
-	unit     string
+	Item     string
+	Quantity float64
+	Unit     string
 }
 
 func (g *GroceriesListItem) ToString() string {
-	return fmt.Sprintf("%s: %f %s", g.item, g.quantity, g.unit)
+	return fmt.Sprintf("%s: %f %s", g.Item, g.Quantity, g.Unit)
 }
