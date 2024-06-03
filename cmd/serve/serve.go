@@ -70,6 +70,7 @@ func handleShoppingList(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		io.WriteString(w, "{ \"message\": \"request failed\" }")
+		return
 	}
 
 	io.WriteString(w, string(resp))
