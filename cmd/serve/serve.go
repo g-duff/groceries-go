@@ -1,31 +1,62 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"io"
 	"log/slog"
 	"net/http"
+	"os"
+	"os/signal"
 
 	"github.com/g-duff/groceries/pkg/shoppinglist"
 )
 
 func main() {
-
 	slog.Info("Starting...")
 
-	http.HandleFunc("/shoppinglist", handle)
+	srvExit := make(chan os.Signal, 1)
+	srvErr := make(chan error, 1)
 
-	http.ListenAndServe(":8080", nil)
+	signal.Notify(srvExit, os.Interrupt)
+
+	srv := http.Server{
+		Addr:    ":8080",
+		Handler: newHandler(),
+	}
+
+	go func() {
+		srvErr <- srv.ListenAndServe()
+		slog.Info("Server stopped listening for new connections")
+	}()
+
+	select {
+	case err := <-srvErr:
+		slog.Error(err.Error())
+		return
+	case <-srvExit:
+		slog.Info("Server shutting down...")
+		srv.Shutdown(context.Background())
+	}
+	slog.Info("Server has shut down")
 }
 
-func handle(w http.ResponseWriter, r *http.Request) {
+func newHandler() http.Handler {
+	mux := http.NewServeMux()
+
+	mux.HandleFunc("/shoppinglist", handleShoppingList)
+
+	return mux
+}
+
+func handleShoppingList(w http.ResponseWriter, r *http.Request) {
 
 	meals := [10]string{"chips", "bar"}
 
-	dd := shoppinglist.MealsDataSpy{}
-	// dd := shoppinglist.MealsDataFiles{
-	// 	Directory: "./testdata",
-	// }
+	// dd := shoppinglist.MealsDataSpy{}
+	dd := shoppinglist.MealsDataFiles{
+		Directory: "./testdata",
+	}
 
 	groceriesListItems := shoppinglist.Create(&dd, meals[:])
 
