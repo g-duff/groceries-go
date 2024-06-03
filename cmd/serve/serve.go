@@ -33,7 +33,7 @@ func main() {
 
 	select {
 	case err := <-srvErr:
-		slog.Error(err.Error())
+		slog.Error("Server error", "message", err.Error())
 		return
 	case <-srvExit:
 		slog.Info("Server shutting down...")
