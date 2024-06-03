@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 
 	"github.com/g-duff/groceries/pkg/shoppinglist"
 )
@@ -50,6 +51,11 @@ func newHandler() http.Handler {
 }
 
 func handleShoppingList(w http.ResponseWriter, r *http.Request) {
+
+	inputMeal := r.URL.Query()["meal"]
+
+	msg := "Request to " + r.URL.Path + " for " + strings.Join(inputMeal, ", ")
+	slog.Info(msg)
 
 	meals := [10]string{"chips", "bar"}
 
